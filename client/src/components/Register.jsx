@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Route, Switch, Link } from 'react-router-dom'
+
 import axios from 'axios';
 import User from '../models/User';
 
@@ -21,29 +23,24 @@ const Form = styled.form`
     align-items: center;
     border: 2px solid #DC8B12;
     border-radius: 10px;
-    /* background-color:  */
 `;
 
-const FormTitle = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3rem;
+const Title = styled.div`
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    text-transform: capitalize;
 `;
 
 const InputContainer = styled.div`
     width: 100%;
     height: 5rem;
-    /* border: 1px solid black; */
     display: flex;    
     align-items: center;
     justify-content: center;
-    /* padding-left: 4rem; */
 `;
 
 const Input = styled.input`
-    /* margin: 0 auto; */
-    /* margin-left: 4rem; */
     border: none;
     border-bottom: 1px solid #4d4d4d;
     outline: none;
@@ -78,8 +75,19 @@ const Submit = styled.input`
     border: none;
     border-radius: 10px;
     letter-spacing: 1px;
+    color: #FFF;
+    background-color: #22a2f2;
     cursor: pointer;
+
+    &:hover {
+        background-color: #1371ab;
+    }
 `;
+
+const SmallNote = styled.div`
+    text-align: center;
+`;
+
 
 class Register extends Component {
 
@@ -108,7 +116,6 @@ class Register extends Component {
         })
         .catch((err) => console.log(err));
         
-        //redirect to
     }
 
     handleInput = (e) => {
@@ -136,7 +143,7 @@ class Register extends Component {
         
         return (
             <Container>
-                <FormTitle>Register</FormTitle>
+                <Title>create an account</Title>
                 <Form onSubmit={this.handleSubmit}>
                     <InputContainer>
                         <Input type="text" name="firstname" id="" placeholder='first name' onChange={this.handleInput} />
@@ -151,19 +158,21 @@ class Register extends Component {
                         <Input type="" name="password" id="" placeholder='password' onChange={this.handleInput} />
                     </InputContainer>
                     {/* <small>*type of user</small> */}
-                    <InputContainer>
-                        {/* <LabelSelect htmlFor="type">type of user</LabelSelect> */}
+                    {/* <InputContainer>
                         <Select name="type" id="type">
                             <option value="" defaultValue>choose type of user</option>
                             <option value="trainer">trainer</option>
                             <option value="trainee">trainee</option>
                         </Select>
-                    </InputContainer>
+                    </InputContainer> */}
   
                     {/* <button type="submit" onClick={this.handleSubmit}>Register</button> */}
                     <InputContainer>
                         <Submit type="submit" value="Register"/>
                     </InputContainer>
+                    <SmallNote>
+                        Already have an account?&nbsp;<Link to='/'>login</Link>
+                    </SmallNote>
                 </Form>
             </Container>
         );

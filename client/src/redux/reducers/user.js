@@ -1,7 +1,7 @@
 import { GET_USER, NEW_USER } from '../constants/user';
 
 const initialState = {
-    
+    isLogged: true,
 };
 
 export default function userReducer(state = initialState, action) {

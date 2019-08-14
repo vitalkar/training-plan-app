@@ -1,38 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import { connect } from 'react-redux'
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
 import Sidebar from './Sidebar';
 import ControlPanel from './ControlPanel';
+import { Route, Switch, Link } from 'react-router-dom'
 
-const AppContainer = styled.div`
+const Container = styled.div`
   height: 100%;
   display: flex;
+  flex-direction: column;
 `;
 
 const Main = styled.div`
-  height: 100%;
+  height: 95%;
   width: 100%;
 `;
 
-const App = () => {
-  return (
-    <Router>
-      <AppContainer>
-        <Sidebar />
+const Footer = styled.div`
+  height: 5rem;
+  width: 100%;
+  background-color: #DC8B12;
+`;
+
+class App extends Component {
+  
+  
+  
+  render() {  
+    const { isLogged } = this.props;
+
+    let display = null;
+        
+    if (isLogged) {
+      display = (<Home />);
+    } else {
+      // display = (<Login />);
+      // <>
+    }
+
+    return (
+      <Container>
         <Main>
           <Switch>
-            <Route exact path='/' component={Home} />
-            <Route path='/login' component={Login} />
+            <Route exact path='/' render={() => (isLogged) ? <Home /> : <Login />} />
             <Route path='/register' component={Register} />
-            <Route path='/control' component={ControlPanel} />
+            {/* {display} */}
           </Switch>
         </Main>
-      </AppContainer>
-    </Router>
-  );
+        <Footer>created by vitka &copy;</Footer>
+      </Container>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  isLogged: state.user.isLogged,
+})
+
+export default connect(mapStateToProps, null)(App);
